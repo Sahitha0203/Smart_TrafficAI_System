@@ -3,42 +3,66 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Heading = () => {
-  let [btnName, setBtnName] = useState("Login");
+  const [btnName, setBtnName] = useState("Login");
+
   return (
-    <div className="fixed top-0 left-0 w-full flex items-center bg-white px-4 py-2 shadow-lg">
-      <div className="w-20 p-2 m-2">
-        <img src={LOGO_URL} alt="Logo" />
+    <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-white shadow-md px-6 py-3 h-20">
+      {/* Logo */}
+      <div className="flex items-center">
+        <img src={LOGO_URL} alt="Logo" className="w-10 h-10 mr-2" />
+        <h1 className="text-xl font-bold text-gray-800">TrafficAI</h1>
       </div>
-      <div className="nav-items ml-auto">
-        <ul className="flex p-0 m-0 text-black items-center gap-2">
-          <li className="p-2">
-            <Link to="/home">Home</Link>
+
+      {/* Navigation */}
+      <nav>
+        <ul className="flex items-center gap-6 text-gray-800 font-medium">
+          <li>
+            <Link to="/home" className="hover:text-blue-600 transition-colors">
+              Home
+            </Link>
           </li>
-          <li className="p-2">
-            <Link to="/about">About</Link>
+          <li>
+            <Link to="/about" className="hover:text-blue-600 transition-colors">
+              About
+            </Link>
           </li>
-          <li className="p-2">
-            <Link to="/dashboard">Dashboard</Link>
+          <li>
+            <Link
+              to="/dashboard"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Dashboard
+            </Link>
           </li>
-          <li className="p-2">
-            <Link to="/map-view">Map view</Link>
+          <li>
+            <Link
+              to="/map-view"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Map view
+            </Link>
           </li>
-          <li className="p-2">
-            <Link to="/upload">Upload</Link>
+          <li>
+            <Link
+              to="/upload"
+              className="hover:text-blue-600 transition-colors"
+            >
+              Upload
+            </Link>
           </li>
-          <li className="p-2">
+          <li>
             <button
-              className="login"
-              onClick={() => {
-                setBtnName("Logout");
-              }}
+              onClick={() =>
+                setBtnName((prev) => (prev === "Login" ? "Logout" : "Login"))
+              }
+              className="px-4 py-2 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition-all"
             >
               {btnName}
             </button>
           </li>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
