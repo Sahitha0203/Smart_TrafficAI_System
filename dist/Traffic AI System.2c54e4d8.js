@@ -38416,7 +38416,6 @@ var prevRefreshSig = globalThis.$RefreshSig$;
 $parcel$ReactRefreshHelpers$9df0.prelude(module);
 
 try {
-// Dashboard.js
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
@@ -38432,267 +38431,301 @@ const Dashboard = ()=>{
         const fetchStatus = async ()=>{
             try {
                 const response = await fetch(API_URL);
-                if (!response.ok) // If the server is up but returns an HTTP error (e.g., 500)
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 const json = await response.json();
                 console.log("Full API Response:", json);
                 const statusData = {
                     congestion: json.congestion || "N/A",
                     trend: json.trend || "N/A",
-                    avg_count: json.avg_count !== undefined ? json.avg_count : "N/A",
+                    avg_count: json.avg_count ?? "N/A",
                     timestamp: json.timestamp || "N/A",
                     window_history: json.window_history || []
                 };
                 setStatus(statusData);
-                setError(null); // Clear any previous errors
+                setError(null);
             } catch (err) {
-                // This catches network errors (e.g., "Fetch failed") and HTTP errors
                 const errorMessage = "Fetching error: " + err.message + ". Check if your FastAPI server is running.";
                 setError(errorMessage);
                 console.error(errorMessage);
             }
         };
-        // 1. Fetch immediately on component mount
         fetchStatus();
-        // 2. Set up polling to update the data every 5 seconds (5000ms)
         const intervalId = setInterval(fetchStatus, 5000);
-        // 3. Cleanup: Clear the interval when the component unmounts
         return ()=>clearInterval(intervalId);
     }, []);
-    // --- Rendering Logic ---
-    if (error) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        style: {
-            padding: "20px",
-            border: "1px solid red",
-            color: "red",
-            backgroundColor: "#fee"
-        },
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "\uD83D\uDEA8 Connection Error"
-            }, void 0, false, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 64,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    "Could not fetch data from the backend. Please ensure the FastAPI server is running at",
-                    " ",
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                        href: API_URL,
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: API_URL
-                    }, void 0, false, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 68,
-                        columnNumber: 11
-                    }, undefined),
-                    "."
-                ]
-            }, void 0, true, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 65,
-                columnNumber: 9
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    "Details: ",
-                    error
-                ]
-            }, void 0, true, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 73,
-                columnNumber: 9
-            }, undefined)
-        ]
-    }, void 0, true, {
-        fileName: "src/components/Dashboard.js",
-        lineNumber: 56,
-        columnNumber: 7
-    }, undefined);
-    if (!status || status.congestion === "LOADING") return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: "Loading initial status..."
-    }, void 0, false, {
-        fileName: "src/components/Dashboard.js",
-        lineNumber: 79,
-        columnNumber: 12
-    }, undefined);
-    // Dynamic styling for visual feedback
     const getCongestionColor = (level)=>{
         switch(level){
             case "HIGH":
-                return "darkred";
+                return "text-red-600 border-red-400";
             case "MODERATE":
-                return "orange";
+                return "text-yellow-600 border-yellow-400";
             case "LOW":
-                return "green";
+                return "text-green-600 border-green-400";
             case "ERROR":
             case "ERROR_RUNTIME":
-                return "red";
+                return "text-red-700 border-red-500";
             default:
-                return "gray";
+                return "text-gray-600 border-gray-300";
         }
     };
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        style: {
-            padding: "20px",
-            fontFamily: "Arial, sans-serif"
-        },
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                children: "Traffic Congestion Dashboard \uD83D\uDEA6"
-            }, void 0, false, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 100,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 101,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                style: {
-                    marginBottom: "20px",
-                    padding: "15px",
-                    border: `2px solid ${getCongestionColor(status.congestion)}`,
-                    borderRadius: "8px",
-                    backgroundColor: "#f9f9f9"
-                },
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                        children: "Current Status"
-                    }, void 0, false, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 112,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                                children: "Congestion Level: "
-                            }, void 0, false, {
-                                fileName: "src/components/Dashboard.js",
-                                lineNumber: 114,
-                                columnNumber: 11
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                                style: {
-                                    color: getCongestionColor(status.congestion),
-                                    fontWeight: "bold"
-                                },
-                                children: status.congestion
-                            }, void 0, false, {
-                                fileName: "src/components/Dashboard.js",
-                                lineNumber: 115,
-                                columnNumber: 11
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 113,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                                children: "Traffic Trend: "
-                            }, void 0, false, {
-                                fileName: "src/components/Dashboard.js",
-                                lineNumber: 125,
-                                columnNumber: 11
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                                style: {
-                                    color: status.trend === "INCREASING" ? "red" : status.trend === "DECREASING" ? "green" : "darkblue"
-                                },
-                                children: status.trend
-                            }, void 0, false, {
-                                fileName: "src/components/Dashboard.js",
-                                lineNumber: 126,
-                                columnNumber: 11
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 124,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                                children: "Average Vehicle Count:"
-                            }, void 0, false, {
-                                fileName: "src/components/Dashboard.js",
-                                lineNumber: 140,
-                                columnNumber: 11
-                            }, undefined),
-                            " ",
-                            status.avg_count
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 139,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        style: {
-                            fontSize: "0.8em",
-                            color: "gray"
-                        },
-                        children: [
-                            "Last Updated (UTC): ",
-                            status.timestamp
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 142,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 103,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
-                children: [
-                    "History (",
-                    status.window_history.length,
-                    " most recent intervals)"
-                ]
-            }, void 0, true, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 147,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: status.window_history.map((s, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        style: {
-                            display: "inline-block",
-                            padding: "5px 10px",
-                            marginRight: "5px",
-                            borderRadius: "4px",
-                            backgroundColor: getCongestionColor(s) === "darkred" ? "#ffdddd" : getCongestionColor(s) === "orange" ? "#ffeecc" : "#ddffdd",
-                            color: getCongestionColor(s)
-                        },
-                        children: s
-                    }, index, false, {
-                        fileName: "src/components/Dashboard.js",
-                        lineNumber: 150,
-                        columnNumber: 11
-                    }, undefined))
-            }, void 0, false, {
-                fileName: "src/components/Dashboard.js",
-                lineNumber: 148,
-                columnNumber: 7
-            }, undefined)
-        ]
-    }, void 0, true, {
+    const getBadgeStyle = (level)=>{
+        switch(level){
+            case "HIGH":
+                return "bg-red-100 text-red-700 border border-red-400";
+            case "MODERATE":
+                return "bg-yellow-100 text-yellow-700 border border-yellow-400";
+            case "LOW":
+                return "bg-green-100 text-green-700 border border-green-400";
+            default:
+                return "bg-gray-100 text-gray-600 border border-gray-300";
+        }
+    };
+    // --- Render states ---
+    if (error) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "pt-24 pb-12 text-center",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "max-w-lg mx-auto bg-red-50 border border-red-400 text-red-700 rounded-xl p-6",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                    className: "text-xl font-semibold mb-2",
+                    children: "\uD83D\uDEA8 Connection Error"
+                }, void 0, false, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 78,
+                    columnNumber: 11
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    className: "mb-2",
+                    children: [
+                        "Could not fetch data from the backend. Please ensure the FastAPI server is running at",
+                        " ",
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                            href: API_URL,
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "underline",
+                            children: API_URL
+                        }, void 0, false, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 82,
+                            columnNumber: 13
+                        }, undefined),
+                        "."
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 79,
+                    columnNumber: 11
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    className: "text-sm",
+                    children: error
+                }, void 0, false, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 92,
+                    columnNumber: 11
+                }, undefined)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/Dashboard.js",
+            lineNumber: 77,
+            columnNumber: 9
+        }, undefined)
+    }, void 0, false, {
         fileName: "src/components/Dashboard.js",
-        lineNumber: 99,
+        lineNumber: 76,
+        columnNumber: 7
+    }, undefined);
+    if (!status) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "pt-24 text-center text-gray-600",
+        children: "Loading data..."
+    }, void 0, false, {
+        fileName: "src/components/Dashboard.js",
+        lineNumber: 100,
+        columnNumber: 7
+    }, undefined);
+    // --- Main UI ---
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "pt-24 pb-12 px-6 bg-gray-50 min-h-screen",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "max-w-5xl mx-auto",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                    className: "text-4xl font-extrabold text-gray-900 mb-8 text-center",
+                    children: "Traffic Dashboard"
+                }, void 0, false, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 108,
+                    columnNumber: 9
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    className: `bg-white border-2 rounded-2xl shadow-sm p-8 mb-10 ${status.congestion === "LOW" ? "border-green-400" : status.congestion === "MODERATE" ? "border-yellow-400" : "border-red-400"}`,
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                            className: "text-2xl font-semibold text-gray-800 mb-6",
+                            children: "Current Traffic Status"
+                        }, void 0, false, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 122,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "grid grid-cols-1 md:grid-cols-3 gap-6 text-left",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                    children: [
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: "text-gray-600 text-sm mb-1",
+                                            children: "Congestion Level:"
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 128,
+                                            columnNumber: 15
+                                        }, undefined),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: `text-2xl font-bold ${status.congestion === "LOW" ? "text-green-600" : status.congestion === "MODERATE" ? "text-yellow-600" : "text-red-600"}`,
+                                            children: status.congestion
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 129,
+                                            columnNumber: 15
+                                        }, undefined)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/Dashboard.js",
+                                    lineNumber: 127,
+                                    columnNumber: 13
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                    children: [
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: "text-gray-600 text-sm mb-1",
+                                            children: "Traffic Trend:"
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 143,
+                                            columnNumber: 15
+                                        }, undefined),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: `text-2xl font-bold ${status.trend === "INCREASING" ? "text-red-600" : status.trend === "DECREASING" ? "text-green-600" : "text-blue-600"}`,
+                                            children: status.trend
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 144,
+                                            columnNumber: 15
+                                        }, undefined)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/Dashboard.js",
+                                    lineNumber: 142,
+                                    columnNumber: 13
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                    children: [
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: "text-gray-600 text-sm mb-1",
+                                            children: "Average Vehicle Count:"
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 158,
+                                            columnNumber: 15
+                                        }, undefined),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                            className: "text-2xl font-bold text-gray-800",
+                                            children: status.avg_count
+                                        }, void 0, false, {
+                                            fileName: "src/components/Dashboard.js",
+                                            lineNumber: 161,
+                                            columnNumber: 15
+                                        }, undefined)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/components/Dashboard.js",
+                                    lineNumber: 157,
+                                    columnNumber: 13
+                                }, undefined)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 126,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {
+                            className: "my-6"
+                        }, void 0, false, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 167,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                            className: "text-sm text-gray-500",
+                            children: [
+                                "Last Updated (UTC): ",
+                                status.timestamp
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 169,
+                            columnNumber: 11
+                        }, undefined)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 113,
+                    columnNumber: 9
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    className: "bg-white rounded-2xl shadow-sm border p-6",
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                            className: "text-xl font-semibold text-gray-800 mb-4",
+                            children: [
+                                "History (",
+                                status.window_history.length,
+                                " most recent intervals)"
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 176,
+                            columnNumber: 11
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "flex flex-wrap gap-3",
+                            children: status.window_history.length > 0 ? status.window_history.map((level, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                    className: `px-6 py-2 rounded-full font-semibold text-sm ${getBadgeStyle(level)}`,
+                                    children: level
+                                }, index, false, {
+                                    fileName: "src/components/Dashboard.js",
+                                    lineNumber: 183,
+                                    columnNumber: 17
+                                }, undefined)) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                className: "text-gray-500",
+                                children: "No recent data available"
+                            }, void 0, false, {
+                                fileName: "src/components/Dashboard.js",
+                                lineNumber: 193,
+                                columnNumber: 15
+                            }, undefined)
+                        }, void 0, false, {
+                            fileName: "src/components/Dashboard.js",
+                            lineNumber: 180,
+                            columnNumber: 11
+                        }, undefined)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Dashboard.js",
+                    lineNumber: 175,
+                    columnNumber: 9
+                }, undefined)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/Dashboard.js",
+            lineNumber: 106,
+            columnNumber: 7
+        }, undefined)
+    }, void 0, false, {
+        fileName: "src/components/Dashboard.js",
+        lineNumber: 105,
         columnNumber: 5
     }, undefined);
 };
