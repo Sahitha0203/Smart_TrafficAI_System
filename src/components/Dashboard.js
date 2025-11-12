@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Dashboard = () => {
   const [status, setStatus] = useState(null);
   const [error, setError] = useState(null);
-  const API_URL = "http://3.108.118.186:5000/status"; // Your FastAPI URL
+  const API_URL = "http://127.0.0.1:8000/status"; // Your FastAPI URL
 
   useEffect(() => {
     const fetchStatus = async () => {
