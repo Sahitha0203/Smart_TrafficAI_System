@@ -11,7 +11,8 @@ import Heading from "./components/Heading";
 import Body from "./components/Body";
 import About from "./components/About";
 import Dashboard from "./components/Dashboard";
-
+import MapView from "./components/MapView";
+import UploadPage from "./components/UploadPage";
 // ... Your Layout component is fine ...
 const Layout = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => (
       <Route path="home" element={<Body />} />
       <Route path="about" element={<About />} />
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="map-view" element={<MapView />} />
+      <Route path="upload" element={<UploadPage />} />
     </Route>
   </Routes>
 );
